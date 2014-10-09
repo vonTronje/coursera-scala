@@ -1,0 +1,6 @@
+object test {
+	def test_func(a: Int) = a                 //> test_func: (a: Int)Int
+	test_func(1)                              //> res0: Int = 1
+	
+  val test_2(b: Int) = b
+}

@@ -1,0 +1,3 @@
+object test {
+	def test_func(a: Int) = println(a)        //> test_func: (a: Int)Unit
+}

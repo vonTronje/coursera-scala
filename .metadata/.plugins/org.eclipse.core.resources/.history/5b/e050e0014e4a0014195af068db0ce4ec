@@ -1,0 +1,6 @@
+object test {
+	def test_func(a: Int) = a                 //> test_func: (a: Int)Unit
+	test_func(1)                              //> 1
+	
+
+}

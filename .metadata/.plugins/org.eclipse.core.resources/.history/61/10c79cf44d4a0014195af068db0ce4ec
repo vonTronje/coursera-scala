@@ -1,0 +1,4 @@
+object test {
+	def test_func(a: Int) = println(a)
+	test(1)
+}
