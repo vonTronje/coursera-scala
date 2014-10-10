@@ -130,7 +130,7 @@ class Empty extends TweetSet {
 class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet {
 
   def filterAcc(p: Tweet => Boolean, acc: TweetSet): TweetSet =
-    if (p(elem)) new NonEmpty(elem, left.filterAcc(p, new Empty), right.filterAcc(p, new Empty))
+    if (p(elem)) new NonEmpty(elem, left.filterAcc(p, acc), right.filterAcc(p, new Empty))
     else left.filterAcc(p, right.filterAcc(p, acc))
 
   def contains(x: Tweet): Boolean =
