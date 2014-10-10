@@ -19,14 +19,14 @@ class TweetSetSuite extends FunSuite {
   }
 
   trait MyTestSets {
-    val a = new Tweet("title", "body", 42)
-    val b = new Tweet("title", "body", 5)
-    val c = new Tweet("title", "body", 5)
-    val d = new Tweet("title", "body", 42)
-    val e = new Tweet("title", "body", 42)
-    val f = new Tweet("title", "body", 5)
-    val g = new Tweet("title", "body", 5)
-    val i = new Tweet("title", "body", 42)
+    val a = new Tweet("title a", "body a", 42)
+    val b = new Tweet("title b", "body b", 5)
+    val c = new Tweet("title c", "body c", 5)
+    val d = new Tweet("title d", "body d", 42)
+    val e = new Tweet("title e", "body e", 42)
+    val f = new Tweet("title f", "body f", 5)
+    val g = new Tweet("title g", "body g", 5)
+    val i = new Tweet("title i", "body i", 42)
     val emptySet = new Empty
     val testSet= emptySet.incl(d).incl(c).incl(a).incl(b).incl(f).incl(e).incl(i).incl(g)
   }
