@@ -1,1 +1,4 @@
-objsets/target/*
+*/target/*
+*/project/*
+*/lib_managed/*
+*/.worksheet/*
