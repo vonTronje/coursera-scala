@@ -56,7 +56,7 @@ abstract class TweetSet {
    * Question: Should we implment this method here, or should it remain abstract
    * and be implemented in the subclasses?
    */
-   def union(that: TweetSet): TweetSet = ???
+   def union(that: TweetSet): TweetSet
 
   /**
    * Returns the tweet from this set which has the greatest retweet count.
@@ -67,7 +67,9 @@ abstract class TweetSet {
    * Question: Should we implment this method here, or should it remain abstract
    * and be implemented in the subclasses?
    */
-  def mostRetweeted: Tweet = ???
+  def mostRetweeted: Tweet
+
+  def mostRetweetedAcc(acc: Tweet): Tweet
 
   /**
    * Returns a list containing all tweets of this set, sorted by retweet count
@@ -78,8 +80,7 @@ abstract class TweetSet {
    * Question: Should we implment this method here, or should it remain abstract
    * and be implemented in the subclasses?
    */
-  def descendingByRetweet: TweetList = ???
-
+  def descendingByRetweet: TweetList
 
   /**
    * The following methods are already implemented
@@ -113,6 +114,7 @@ class Empty extends TweetSet {
 
   def filterAcc(p: Tweet => Boolean, acc: TweetSet): TweetSet = acc
 
+  def union(that: TweetSet): TweetSet = that
 
   /**
    * The following methods are already implemented
@@ -121,6 +123,13 @@ class Empty extends TweetSet {
   def contains(tweet: Tweet): Boolean = false
 
   def incl(tweet: Tweet): TweetSet = new NonEmpty(tweet, new Empty, new Empty)
+
+  def mostRetweeted: Tweet =
+    throw new MethodNotApplicableException("Empty Tweetset has no elements")
+
+  def mostRetweetedAcc(acc: Tweet): Tweet = acc
+
+  def descendingByRetweet: TweetList = Nil
 
   def remove(tweet: Tweet): TweetSet = this
 
@@ -137,6 +146,21 @@ class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet {
     if (x.text < elem.text) left.contains(x)
     else if (elem.text < x.text) right.contains(x)
     else true
+
+  def union(that: TweetSet): TweetSet =
+    (left union right) union that.incl(elem)
+
+  def mostRetweeted(): Tweet =
+    mostRetweetedAcc(elem)
+
+  def mostRetweetedAcc(acc: Tweet): Tweet =
+    if (left.mostRetweetedAcc(elem).retweets > right.mostRetweetedAcc(elem).retweets)
+      left.mostRetweetedAcc(elem)
+    else
+      right.mostRetweetedAcc(elem)
+
+  override def descendingByRetweet: TweetList =
+    new Cons(mostRetweeted, remove(mostRetweeted).descendingByRetweet)
 
   def incl(x: Tweet): TweetSet = {
     if (x.text < elem.text) new NonEmpty(elem, left.incl(x), right)
@@ -155,6 +179,8 @@ class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet {
     right.foreach(f)
   }
 }
+
+class MethodNotApplicableException(msg: String) extends RuntimeException(msg)
 
 trait TweetList {
   def head: Tweet
